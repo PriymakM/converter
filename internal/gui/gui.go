@@ -62,26 +62,26 @@ func onExit() {
 }
 
 func MainWindow() {
-	// Запуск трея в отдельной горутине
+	// Running the tray in a separate goroutine
 	go func() {
 		systray.Run(onReady, onExit)
 	}()
 
-	// Запуск Fyne приложения в главной горутине
+	// Run the Fyne application in the main goroutine
 	a = app.New()
 	w = a.NewWindow("Currency Converter")
 	w.Resize(fyne.NewSize(800, 800))
 
-	// Завантажуємо іконку з файлу як []byte
+	// Load icon from file as []byte
 	iconData, err := ioutil.ReadFile("../image/convertimgBig.png")
 	if err != nil {
 		log.Fatal("Could not load the icon:", err)
 	}
 
-	// Встановлюємо іконку для вікна
+	// Set the icon for the window
 	w.SetIcon(fyne.NewStaticResource("icon.png", iconData))
 
-	// Элементы интерфейса
+	// Interface elements
 	currencyFrom = widget.NewSelect([]string{"USD", "EUR", "UAH", "GBP"}, nil)
 	currencyTo = widget.NewSelect([]string{"USD", "EUR", "UAH", "GBP"}, nil)
 	amountFrom = widget.NewEntry()
@@ -91,7 +91,7 @@ func MainWindow() {
 	amountTo.SetReadOnly(true)
 	ratesLabel = widget.NewLabel("")
 
-	// Кнопки
+	// Buttons
 	convertButton := widget.NewButton("Convert", func() {
 		convertCurrency()
 	})
@@ -108,7 +108,7 @@ func MainWindow() {
 		a.Quit()
 	})
 
-	// Добавляем элементы в окно
+	// Add items to the window
 	w.SetContent(container.NewVBox(
 		widget.NewLabel("Convert currency"),
 		container.NewGridWithColumns(2, currencyFrom, amountFrom),
@@ -120,7 +120,6 @@ func MainWindow() {
 		ratesLabel,
 	))
 
-	// Показываем основное окно приложения
 	w.ShowAndRun()
 }
 
