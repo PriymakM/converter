@@ -5,6 +5,8 @@ import (
 	"exchanger/internal/logical"
 	"exchanger/internal/logical/rates"
 	"fmt"
+	"io/ioutil"
+	"log"
 	"strconv"
 
 	"fyne.io/fyne"
@@ -21,24 +23,25 @@ var ratesLabel *widget.Label
 var a fyne.App
 
 func onReady() {
-	// Иконка трея
-	systray.SetIcon([]byte{ /* Добавьте иконку в формате []byte */ })
+	// Tray icon
+	iconData, err := ioutil.ReadFile("../image/convertimg.png")
+	if err != nil {
+		log.Fatal("Не вдалося завантажити іконку:", err)
+	}
+	systray.SetIcon(iconData)
 	systray.SetTitle("Currency Converter")
 	systray.SetTooltip("Currency Converter in system tray")
 
-	// Пункты меню трея
-	// convertMenuItem := systray.AddMenuItem("Convert", "Convert currency")
+	// Tray menu items
 	todayRatesMenuItem := systray.AddMenuItem("Rates for today", "Exchange rates for today")
 	monthRatesMenuItem := systray.AddMenuItem("Rates for this month", "This month's exchange rate")
 	lastMonthRatesMenuItem := systray.AddMenuItem("Rates for last month", "Last month's exchange rate")
 	quitMenuItem := systray.AddMenuItem("Exit", "Exit application")
 
-	// Обработка кликов по пунктам меню
+	// Processing clicks on menu items
 	go func() {
 		for {
 			select {
-			// case <-convertMenuItem.ClickedCh:
-			// 	showMainWindow()
 			case <-todayRatesMenuItem.ClickedCh:
 				showTodayRates()
 			case <-monthRatesMenuItem.ClickedCh:
@@ -54,7 +57,8 @@ func onReady() {
 }
 
 func onExit() {
-	// Действия при выходе
+	// Exit actions
+	fmt.Println("Processing exit!")
 }
 
 func MainWindow() {
@@ -67,6 +71,15 @@ func MainWindow() {
 	a = app.New()
 	w = a.NewWindow("Currency Converter")
 	w.Resize(fyne.NewSize(800, 800))
+
+	// Завантажуємо іконку з файлу як []byte
+	iconData, err := ioutil.ReadFile("../image/convertimgBig.png")
+	if err != nil {
+		log.Fatal("Could not load the icon:", err)
+	}
+
+	// Встановлюємо іконку для вікна
+	w.SetIcon(fyne.NewStaticResource("icon.png", iconData))
 
 	// Элементы интерфейса
 	currencyFrom = widget.NewSelect([]string{"USD", "EUR", "UAH", "GBP"}, nil)
