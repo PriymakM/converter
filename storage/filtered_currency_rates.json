@@ -1,0 +1,26 @@
+[
+  {
+    "StartDate": "20.09.2024",
+    "TimeSign": "0000",
+    "CurrencyCode": "840",
+    "CurrencyCodeL": "USD",
+    "Units": 1,
+    "Amount": 41.4445
+  },
+  {
+    "StartDate": "20.09.2024",
+    "TimeSign": "0000",
+    "CurrencyCode": "978",
+    "CurrencyCodeL": "EUR",
+    "Units": 1,
+    "Amount": 46.2396
+  },
+  {
+    "StartDate": "20.09.2024",
+    "TimeSign": "0000",
+    "CurrencyCode": "826",
+    "CurrencyCodeL": "GBP",
+    "Units": 1,
+    "Amount": 55.0487
+  }
+]
