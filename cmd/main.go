@@ -71,6 +71,16 @@ func main() {
 		}
 	}
 
+	// Path to the storage folder
+	storagePath := "../storage"
+
+	// Create a folder if it does not exist
+	err := os.MkdirAll(storagePath, os.ModePerm)
+	if err != nil {
+		fmt.Println("Error when creating a folder:", err)
+		return
+	}
+
 	// If there are no arguments, open the main GUI
 	gui.MainWindow()
 }
